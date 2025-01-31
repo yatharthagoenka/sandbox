@@ -14,15 +14,8 @@ variable "region" {
   default     = "us-central1" # Default region
 }
 
-resource "google_secret_manager_secret" "secret" {
-  secret_id = var.secret_id
-
-  replication {
-    auto {}
-  }
-}
-
-variable "secret_id" {
-  description = "The ID of the secret"
-  type        = string
+resource "google_project_iam_member" "viewer_role" {
+  project = var.project_id
+  role    = "roles/viewer"
+  member  = "user:${var.user_email}"
 }
